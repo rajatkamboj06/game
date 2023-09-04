@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number Guessing Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      #output {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Number Guessing Game</h1>
+    <p>Choose your difficulty level:</p>
+    <button id="easy">Easy (1-10)</button>
+    <button id="hard">Hard (1-100)</button>
+    <p>Enter your guess:</p>
+    <input type="number" id="guessInput" />
+    <button id="submitGuess">Submit Guess</button>
+    <p id="output"></p>
+
+    <script>
+      let secretNumber;
+      let maxAttempts;
+      let attempts;
+      let isGameOver = false;
+
+      function setupGame(difficulty) {
+        if (difficulty === "easy") {
+          secretNumber = Math.floor(Math.random() * 10) + 1;
+          maxAttempts = 3;
+        } else if (difficulty === "hard") {
+          secretNumber = Math.floor(Math.random() * 100) + 1;
+          maxAttempts = 10;
+        }
+
+        attempts = 0;
+        isGameOver = false;
+        document.getElementById("output").textContent = "";
+      }
+
+      document.getElementById("easy").addEventListener("click", () => {
+        setupGame("easy");
+      });
+
+      document.getElementById("hard").addEventListener("click", () => {
+        setupGame("hard");
+      });
+
+      document.getElementById("submitGuess").addEventListener("click", () => {
+        if (isGameOver) {
+          return;
+        }
+
+        const guessInput = document.getElementById("guessInput");
+        const guess = parseInt(guessInput.value);
+
+        if (
+          isNaN(guess) ||
+          guess < 1 ||
+          (maxAttempts === 10 && guess > 100) ||
+          (maxAttempts === 3 && guess > 10)
+        ) {
+          document.getElementById("output").textContent =
+            "Please enter a valid number.";
+          return;
+        }
+
+        attempts++;
+
+        if (guess < secretNumber) {
+          document.getElementById("output").textContent = "Too low! Try again.";
+        } else if (guess > secretNumber) {
+          document.getElementById("output").textContent =
+            "Too high! Try again.";
+        } else {
+          document.getElementById(
+            "output"
+          ).textContent = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`;
+          isGameOver = true;
+        }
+
+        if (attempts === maxAttempts && !isGameOver) {
+          document.getElementById(
+            "output"
+          ).textContent = `Sorry, you've reached the maximum number of attempts. The correct number was ${secretNumber}.`;
+          isGameOver = true;
+        }
+      });
+    </script>
+  </body>
+</html>
