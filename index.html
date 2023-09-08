@@ -125,9 +125,9 @@
             attempts++;
 
             if (guess < secretNumber) {
-                document.getElementById("output").textContent = "Too low! Try again.";
+                document.getElementById("output").textContent = " Too low! Try again. ";
             } else if (guess > secretNumber) {
-                document.getElementById("output").textContent = "Too high! Try again.";
+                document.getElementById("output").textContent = " Too high! Try again. ";
             } else {
                 document.getElementById("output").textContent = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`;
                 isGameOver = true;
