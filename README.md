@@ -1,1 +1,2 @@
-# project_1
+# Project_1
+Number Guessing Game
